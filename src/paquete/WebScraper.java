@@ -25,7 +25,7 @@ public class WebScraper {
 			Elements title = doc.select("title");
 			Elements enlaces = doc.select("a");
 			Elements clases = doc.select("*");
-			Elements forms = doc.select("form"); // Seleccionar formularios
+			Elements forms = doc.select("form"); 
 			Elements imagenes = doc.select("img");
 
 			// Crear un archivo HTML
@@ -50,12 +50,12 @@ public class WebScraper {
 					archivo.write("<li><a href=\"" + enlace.attr("href") + "\">" + enlace.text() + "</a></li>");
 					contadorEnlaces++;
 				} else {
-					break; // Salir del bucle después de mostrar 3 enlaces
+					break; 
 				}
 			}
 			archivo.write("</ul>");
 
-			// 3 primeras clases utilizadas
+			// Las 3 primeras clases utilizadas
 			archivo.write("<h2>Clases</h2>");
 			archivo.write("<ul>");
 			int contadorClases = 0;
@@ -80,23 +80,18 @@ public class WebScraper {
 			}
 			
 			
-			// Imágenes encontradas (mostrar las primeras 3 con un tamaño máximo de 120px de alto)
+			// Imágenes encontradas 
 			archivo.write("<h2>Imágenes</h2>");
 			archivo.write("<ul>");
-			
 			int imagenesMostradas = 0;
-
 			for (Element imagen : imagenes) {
 			    if (imagenesMostradas < 3) {
 			        String src = imagen.attr("src");
 			        String alt = imagen.attr("alt");
-
-			        // Agregar la etiqueta de imagen con un tamaño máximo de 120px de alto
 			        archivo.write("<li><img src=\"" + src + "\" alt=\"" + alt + "\" style=\"max-height: 120px;\"></li>");
-
 			        imagenesMostradas++;
 			    } else {
-			        break; // Salir del bucle después de mostrar 3 imágenes
+			        break; 
 			    }
 			}
 
