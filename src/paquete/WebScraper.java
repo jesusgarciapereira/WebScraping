@@ -26,7 +26,11 @@ public class WebScraper {
 			Elements clases = doc.select("*");
 			Elements formularios = doc.select("form");
 			Elements imagenes = doc.select("img");
-
+			
+			int contadorEnlaces = 0;
+			int contadorClases = 0;
+			int imagenesMostradas = 0;
+			
 			// Crear un archivo HTML
 			BufferedWriter archivo = new BufferedWriter(new FileWriter("resultados.html"));
 			archivo.write("<!DOCTYPE html>");
@@ -43,7 +47,7 @@ public class WebScraper {
 			// Los 3 primeros enlaces encontrados
 			archivo.write("<h2>Enlaces</h2>");
 			archivo.write("<ul>");
-			int contadorEnlaces = 0;
+			
 			for (Element enlace : enlaces) {
 				if (contadorEnlaces < 3) {
 					archivo.write("<li><a href=\"" + enlace.attr("href") + "\">" + enlace.text() + "</a></li>");
@@ -57,7 +61,7 @@ public class WebScraper {
 			// Las 3 primeras clases utilizadas
 			archivo.write("<h2>Clases</h2>");
 			archivo.write("<ul>");
-			int contadorClases = 0;
+
 			for (Element clase : clases) {
 				if (!clase.className().equals("") && contadorClases < 3) {
 					archivo.write("<li>" + clase.attr("class") + "</li>");
@@ -83,7 +87,7 @@ public class WebScraper {
 			// Las 3 primeras imágenes encontradas
 			archivo.write("<h2>Imágenes</h2>");
 			archivo.write("<ul>");
-			int imagenesMostradas = 0;
+
 			for (Element imagen : imagenes) {
 				if (imagenesMostradas < 3) {
 					archivo.write("<li><img src=\"" + imagen.attr("src") + "\" alt=\"" + imagen.attr("alt")
