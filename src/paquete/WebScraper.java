@@ -25,7 +25,7 @@ public class WebScraper {
 			Elements title = doc.select("title");
 			Elements enlaces = doc.select("a");
 			Elements clases = doc.select("*");
-			Elements forms = doc.select("form"); 
+			Elements formularios = doc.select("form");
 			Elements imagenes = doc.select("img");
 
 			// Crear un archivo HTML
@@ -50,7 +50,7 @@ public class WebScraper {
 					archivo.write("<li><a href=\"" + enlace.attr("href") + "\">" + enlace.text() + "</a></li>");
 					contadorEnlaces++;
 				} else {
-					break; 
+					break;
 				}
 			}
 			archivo.write("</ul>");
@@ -69,30 +69,30 @@ public class WebScraper {
 
 			// Indicar si existe formulario y mostrar información
 			archivo.write("<h2>Formulario</h2>");
-			if (!forms.isEmpty()) {
+			if (formularios.size() > 0) {
 				archivo.write("<p>Sí</p>");
-				// Mostrar detalles del formulario
-				Element formulario = forms.first();
-				archivo.write("<p>Formulario redirige a: " + formulario.attr("action") + " con método "
-						+ formulario.attr("method") + "</p>");
+				archivo.write("<ul>");
+				for (Element formulario : formularios) {
+					archivo.write("<li>URL del formulario: " + formulario.attr("action"));
+					archivo.write("</br>Método HTTP: " + formulario.attr("method") + "</li></br>");
+				}
+				archivo.write("</ul>");
 			} else {
 				archivo.write("<p>No</p>");
 			}
-			
-			
-			// Imágenes encontradas 
+
+			// Imágenes encontradas
 			archivo.write("<h2>Imágenes</h2>");
 			archivo.write("<ul>");
 			int imagenesMostradas = 0;
 			for (Element imagen : imagenes) {
-			    if (imagenesMostradas < 3) {
-			        String src = imagen.attr("src");
-			        String alt = imagen.attr("alt");
-			        archivo.write("<li><img src=\"" + src + "\" alt=\"" + alt + "\" style=\"max-height: 120px;\"></li>");
-			        imagenesMostradas++;
-			    } else {
-			        break; 
-			    }
+				if (imagenesMostradas < 3) {
+					archivo.write("<li><img src=\"" + imagen.attr("src") + "\" alt=\"" + imagen.attr("alt")
+							+ "\" style=\"max-height: 120px;\"></li>");
+					imagenesMostradas++;
+				} else {
+					break;
+				}
 			}
 
 			archivo.write("</ul>");
