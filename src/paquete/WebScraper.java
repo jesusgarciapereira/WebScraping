@@ -81,7 +81,7 @@ public class WebScraper {
 				archivo.write("<p>No</p>");
 			}
 
-			// Imágenes encontradas
+			// Las 3 primeras imágenes encontradas
 			archivo.write("<h2>Imágenes</h2>");
 			archivo.write("<ul>");
 			int imagenesMostradas = 0;
