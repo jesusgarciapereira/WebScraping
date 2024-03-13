@@ -27,9 +27,8 @@ public class WebScraper {
 			Elements formularios = doc.select("form");
 			Elements imagenes = doc.select("img");
 			
-			int contadorEnlaces = 0;
-			int contadorClases = 0;
-			int imagenesMostradas = 0;
+			// Contadores para extraer un número determinado de elementos
+			int contador = 0;
 			
 			// Crear un archivo HTML
 			BufferedWriter archivo = new BufferedWriter(new FileWriter("resultados.html"));
@@ -47,12 +46,16 @@ public class WebScraper {
 			// Los 3 primeros enlaces encontrados
 			archivo.write("<h2>Enlaces</h2>");
 			archivo.write("<ul>");
-			
+			// Bucle for-each que recorre todos los enlaces
 			for (Element enlace : enlaces) {
-				if (contadorEnlaces < 3) {
+				// Si el contador es menor que 3
+				if (contador < 3) {
+					// Te los muestra
 					archivo.write("<li><a href=\"" + enlace.attr("href") + "\">" + enlace.text() + "</a></li>");
-					contadorEnlaces++;
+					// Incrementa el contador
+					contador++;
 				} else {
+					// En caso contrario, salimos del bucle
 					break;
 				}
 			}
@@ -61,25 +64,36 @@ public class WebScraper {
 			// Las 3 primeras clases utilizadas
 			archivo.write("<h2>Clases</h2>");
 			archivo.write("<ul>");
-
+			// Reiniciamos el contador
+			contador = 0;
+			// Bucle for-each que recorre todas las clases
 			for (Element clase : clases) {
-				if (!clase.className().equals("") && contadorClases < 3) {
+				// Si el nombre de la clase no es una cadena vacía y el contador es menor que 3
+				if (!clase.className().equals("") && contador < 3) {
+					// Te las muestra
 					archivo.write("<li>" + clase.attr("class") + "</li>");
-					contadorClases++;
+					// Incrementa el contador
+					contador++;
 				}
 			}
 			archivo.write("</ul>");
 
 			// Indicar si existe formulario y mostrar información
 			archivo.write("<h2>Formulario</h2>");
+			// Si la cantidad de formularios es mayor que cero
 			if (formularios.size() > 0) {
+				// Indica que sí hay formularios
 				archivo.write("<p>Sí</p>");
 				archivo.write("<ul>");
+				// Bucle for-each que recorre todos los formularios
 				for (Element formulario : formularios) {
+					// Y te los muestra, tanto la URL
 					archivo.write("<li>URL del formulario: " + formulario.attr("action"));
+					// Como el método
 					archivo.write("</br>Método HTTP: " + formulario.attr("method") + "</li></br>");
 				}
 				archivo.write("</ul>");
+				// En caso contrario indica que no hay formularios
 			} else {
 				archivo.write("<p>No</p>");
 			}
@@ -87,13 +101,19 @@ public class WebScraper {
 			// Las 3 primeras imágenes encontradas
 			archivo.write("<h2>Imágenes</h2>");
 			archivo.write("<ul>");
-
+			// Reiniciamos el contador
+			contador = 0;
+			// Bucle for-each que recorre todas las imágenes
 			for (Element imagen : imagenes) {
-				if (imagenesMostradas < 3) {
+				// Si el contador es menor que 3
+				if (contador < 3) {
+					// Te las muestra
 					archivo.write("<li><img src=\"" + imagen.attr("src") + "\" alt=\"" + imagen.attr("alt")
 							+ "\" style=\"max-height: 120px;\"></li>");
-					imagenesMostradas++;
+					contador++;
+					// Incrementa el contador
 				} else {
+					// En caso contrario, salimos del bucle
 					break;
 				}
 			}
